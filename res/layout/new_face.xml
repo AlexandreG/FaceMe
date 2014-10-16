@@ -1,0 +1,93 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/MainWrapper"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#FFFFFF"
+    android:orientation="horizontal" >
+
+    <!-- <SurfaceView -->
+    <!-- android:id="@+id/SurfaceView" -->
+    <!-- android:layout_width="1dp" -->
+    <!-- android:layout_height="1dp" /> -->
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:background="#dbdbdb"
+        android:padding="10dp"
+        android:orientation="vertical" >
+
+        <!-- <Button -->
+        <!-- android:id="@+id/clear" -->
+        <!-- android:layout_width="wrap_content" -->
+        <!-- android:layout_height="wrap_content" -->
+        <!-- android:text="Clear" /> -->
+
+        <TextView
+            android:id="@+id/textViewStep"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:textAppearance="?android:attr/textAppearanceLarge"/>
+        
+        <TextView
+            android:id="@+id/textViewSize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/size"
+            android:textColor="#000000"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+        <RadioGroup
+            android:id="@+id/radioGroupSize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <RadioButton
+                android:id="@+id/radioButtonSizeSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:text="@string/s"
+            android:textColor="#000000" />
+
+            <RadioButton
+                android:id="@+id/radioButtonSizeMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:text="@string/m"
+            android:textColor="#000000" />
+
+            <RadioButton
+                android:id="@+id/radioButtonSizeLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:text="@string/l"
+            android:textColor="#000000"/>
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/undo"
+            android:layout_width="fill_parent"
+            android:layout_marginTop="10dp"
+            android:layout_height="40dp"
+            android:text="@string/undo"
+            style="@style/btnStyleArsenic" />
+
+        <Button
+            android:id="@+id/next"
+            android:layout_width="fill_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            style="@style/btnStyleGenoa"
+            android:text="@string/next" />
+
+    </LinearLayout>
+
+    <com.faceme.newface.NewFaceView
+        android:id="@+id/NewFaceView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
+
+</LinearLayout>

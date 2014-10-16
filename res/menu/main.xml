@@ -1,0 +1,39 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/newFace"
+        android:title="New Face Options"
+        android:titleCondensed="New Face Options">
+        <menu>
+            <item
+                android:id="@+id/hintItem"
+                android:checkable="true"
+                android:checked="true"
+                android:title="@string/hint"/>
+            <item
+                android:id="@+id/shapeSize"
+                android:checkable="true"
+                android:checked="true"
+                android:title="@string/shapeSize"/>
+        </menu>
+    </item>
+    <item
+        android:id="@+id/username"
+        android:title="UserName"
+        android:titleCondensed="UserName">
+    </item>
+    
+    <item
+        android:id="@+id/sound"
+        android:title="Sound"
+        android:titleCondensed="Sound">
+        <menu>
+            <item
+                android:id="@+id/muteSound"
+                android:checkable="true"
+                android:checked="false"
+                android:title="@string/muteSound"/>
+        </menu>
+    </item>
+
+</menu>

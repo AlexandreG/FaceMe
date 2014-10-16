@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/manageLinearLayoutMain"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_vertical"
+    android:gravity="center"
+    android:background="#ffffff"
+    android:paddingTop="20dp"
+    android:paddingBottom="20dp"
+    android:orientation="horizontal" >
+
+    <ImageView
+        android:id="@+id/dlMiniFaceImgLEye"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:contentDescription="@+string/lefteye" />
+    
+    <ImageView
+        android:id="@+id/dlMiniFaceImgMouth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:contentDescription="@+string/mouth" />
+    
+    <ImageView
+        android:id="@+id/dlMiniFaceImgREye"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginRight="60dp"
+        android:contentDescription="@+string/righteye" />
+
+    <TextView
+        android:id="@+id/faceInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="100dp"
+        android:text="" />
+
+    <Button
+        android:id="@+id/miniFaceDownloadBt"
+        style="@style/btnStyleGenoa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:onClick="downloadItemOnClickHandler"
+        android:text="@string/download" />
+
+</LinearLayout>

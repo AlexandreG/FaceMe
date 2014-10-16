@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">FaceMe!</string>
+    <string name="action_settings">Settings</string>
+    <string name="hint">Show hints ?</string>
+    <string name="shapeSize">Scale the drawings ?</string>
+    <string name="hello_world">Hello world!</string>
+    
+    
+    <string name="newFace">New</string>
+    <string name="playGame">Play</string>
+    <string name="manageFace">Manage</string>
+    <string name="downloadFace">Download</string>
+    <string name="showMenu">Menu</string>
+    <string name="quitApp">Quit</string>
+        <string name="muteSound">Mute all sounds ?</string>
+    
+    <string name="select">Select</string>
+    <string name="delete">Delete</string>
+    <string name="upload">Upload</string>
+    <string name="download">Download</string>
+    <string name="textViewLeftDownloadButton">You can </string>
+    <string name="textViewRightDownloadButton"> more faces online.</string>
+    
+    <string name="face_remove_text">Delete this face ? :O</string>
+    <string name="face_upload_text">Are you sure you want to upload this ?</string>
+    
+    
+    
+    <string name="notConnectedYet">Not connected yet :/</string>
+    
+    
+    
+    
+    <string name="size">Size</string>
+    <string name="s">Small</string>
+    <string name="m">Medium</string>
+    <string name="l">Large</string>
+    <string name="tool">Tool</string>
+    <string name="line">Line</string>
+    <string name="dot">Dot</string>
+    <string name="eraser">Erase</string>
+    <string name="next">Next</string>
+    <string name="undo">Undo</string>
+    
+    <string name="step1">Draw the eyelid of the left eye inside the circle.</string>
+    <string name="step2">Wonderful ! Now, draw the left iris.</string>
+    <string name="step3">Draw the left eyebrow.</string>
+    <string name="step4">Now, the other eye! Draw the right eyelid.</string>
+    <string name="step5">Draw the right iris.</string>
+    <string name="step6">Draw the right eyebrow.</string>
+    <string name="step7">Almost finished ! Draw a mouth.</string>
+
+</resources>
