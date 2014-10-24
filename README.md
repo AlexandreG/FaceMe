@@ -1,7 +1,11 @@
 ##FaceMe!
 
-####Description
 Draw a smiley and play with it.
+
+<a href="https://play.google.com/store/apps/details?id=com.faceme"><img alt="Android app on Google Play" src="https://developer.android.com/images/brand/en_app_rgb_wo_45.png" /></a>
+
+
+####Description
 Touch it, shake it, find out how it works.
 
 Lack of inspiration? Download new smileys online.
