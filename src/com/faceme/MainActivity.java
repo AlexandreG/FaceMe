@@ -1,12 +1,22 @@
 package com.faceme;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.LinkedList;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.InputFilter;
@@ -89,6 +99,36 @@ public class MainActivity extends Activity {
 
 		mSoundManager = new SoundManager(this);
 		// mSoundManager.playSound(mSoundManager.launchapp);
+		
+		//if first launch, we add a default face in the memory
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+		boolean isFirstLaunch = preferences.getBoolean("IS_FIRST_LAUNCH", true);
+		if(isFirstLaunch == true){
+			saveDemoFaceInMemory();
+			
+			// we update the number of faces and first launch
+			SharedPreferences.Editor editor = preferences.edit();
+			editor.putInt("NB_FACE", 1);
+			editor.putInt("CURRENT_FACE", 1);
+			editor.putBoolean("IS_FIRST_LAUNCH", false);
+			editor.commit();
+			
+			//Launch game mode
+			onClickPlay(null);
+		}
+		
+
+		// if no faces, we disable the play button
+		int currentFaceNb = preferences.getInt("CURRENT_FACE", 0);
+		Button bt = (Button) findViewById(R.id.buttonPlay);
+		Button bt2 = (Button) findViewById(R.id.buttonManage);
+		if (currentFaceNb == 0) {
+			bt.setEnabled(false);
+			bt2.setEnabled(false);
+		} else {
+			bt.setEnabled(true);
+			bt2.setEnabled(true);
+		}
 	}
 
 	/**
@@ -321,6 +361,68 @@ public class MainActivity extends Activity {
 		alert.show();
 	}
 
+	/**
+	 * Save in the internal storage the face in the drawables
+	 */
+	private void saveDemoFaceInMemory(){
+		//load bitmap from res
+		LinkedList<Bitmap> bpList = new LinkedList<Bitmap>();
+		bpList.add(BitmapFactory.decodeResource(getResources(), R.drawable.facedemo00));
+		bpList.add(BitmapFactory.decodeResource(getResources(), R.drawable.facedemo01));
+		bpList.add(BitmapFactory.decodeResource(getResources(), R.drawable.facedemo02));
+		bpList.add(BitmapFactory.decodeResource(getResources(), R.drawable.facedemo03));
+		bpList.add(BitmapFactory.decodeResource(getResources(), R.drawable.facedemo04));
+		bpList.add(BitmapFactory.decodeResource(getResources(), R.drawable.facedemo05));
+		bpList.add(BitmapFactory.decodeResource(getResources(), R.drawable.facedemo06));
+		
+		// we save the bitmaps
+		for (int i = 0; i < bpList.size(); ++i) {
+			saveToInternalSorage(0, bpList.get(i), "0" + Integer.toString(i) + ".png");
+			// Log.d(TAG, newFaceView.getmBpList().get(i).getWidth()+"/"+
+			// newFaceView.getmBpList().get(i).getWidth()+"=>"+
+			// croppedBpList.get(i).getWidth()+"/"+croppedBpList.get(i).getHeight());
+		}
+
+		// we recycle the bitmap
+		for (Bitmap bp : bpList) {
+			bp.recycle();
+			bp = null;
+		}
+	}
+	
+	/**
+	 * Save the given bitmap to the memory
+	 * 
+	 * @param nbFace
+	 *            the number of all faces
+	 * @param bitmapImage
+	 *            the bitmap to save
+	 * @param name
+	 *            the name of the file
+	 */
+	private void saveToInternalSorage(int nbFace, Bitmap bitmapImage, String name) {
+		ContextWrapper cw = new ContextWrapper(getApplicationContext());
+		// path to /data/data/yourapp/app_data/imageDir
+		File directory = cw.getDir(Integer.toString(nbFace + 1), Context.MODE_PRIVATE);
+		// Create imageDir
+		File mypath = new File(directory, name);
+		// Log.d(TAG, "mypath: " +mypath);
+
+		FileOutputStream fos = null;
+		try {
+			fos = new FileOutputStream(mypath);
+			// Use the compress method on the BitMap object to write image to
+			// the OutputStream
+			bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
+			fos.close();
+		} catch (FileNotFoundException e) {
+			Log.d(TAG, "File not found: " + e.getMessage());
+		} catch (IOException e) {
+			Log.d(TAG, "Error accessing file: " + e.getMessage());
+		}
+
+	}
+	
 	@Override
 	protected void onStart() {
 		if (D)
@@ -333,19 +435,6 @@ public class MainActivity extends Activity {
 		if (D)
 			Log.v(TAG, "+ ON RESUME +");
 		super.onResume();
-
-		// if no faces, we disable the play button
-		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-		int currentFaceNb = preferences.getInt("CURRENT_FACE", 0);
-		Button bt = (Button) findViewById(R.id.buttonPlay);
-		Button bt2 = (Button) findViewById(R.id.buttonManage);
-		if (currentFaceNb == 0) {
-			bt.setEnabled(false);
-			bt2.setEnabled(false);
-		} else {
-			bt.setEnabled(true);
-			bt2.setEnabled(true);
-		}
 	}
 
 	@Override

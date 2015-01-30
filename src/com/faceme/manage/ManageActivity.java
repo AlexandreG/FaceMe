@@ -565,7 +565,7 @@ public class ManageActivity extends Activity {
 		face.put("country", this.getResources().getConfiguration().locale.getCountry());
 		face.put("screenWidth", sW);
 		face.put("screeHeight", sH);
-		face.put("user_name", preferences.getString("USER_NAME", "Ananamous"));
+		face.put("user_name", preferences.getString("USER_NAME", "unnamed"));
 		face.saveInBackground(new SaveCallback() {
 			@Override
 			public void done(ParseException e) {
