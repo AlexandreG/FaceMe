@@ -50,6 +50,8 @@ public class NotiFicationListAdapter extends ArrayAdapter<DataItem> {
 		holder.selectButton.setTag(holder.item);
 
 		holder.uploadButton = (Button) row.findViewById(R.id.miniFaceUpload);
+		//disable upload of default face
+		if(position == 0) holder.uploadButton.setEnabled(false);
 		holder.uploadButton.setTag(holder.item);
 
 		// Log.d(TAG, "Boolean de l'item :" +
