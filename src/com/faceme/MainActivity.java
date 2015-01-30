@@ -367,6 +367,7 @@ public class MainActivity extends Activity {
 	private void saveDemoFaceInMemory(){
 		//load bitmap from res
 		LinkedList<Bitmap> bpList = new LinkedList<Bitmap>();
+		LinkedList<Bitmap> scaledBpList = new LinkedList<Bitmap>();
 		bpList.add(BitmapFactory.decodeResource(getResources(), R.drawable.facedemo00));
 		bpList.add(BitmapFactory.decodeResource(getResources(), R.drawable.facedemo01));
 		bpList.add(BitmapFactory.decodeResource(getResources(), R.drawable.facedemo02));
@@ -375,19 +376,29 @@ public class MainActivity extends Activity {
 		bpList.add(BitmapFactory.decodeResource(getResources(), R.drawable.facedemo05));
 		bpList.add(BitmapFactory.decodeResource(getResources(), R.drawable.facedemo06));
 		
+		//scale the bitmaps
+		for (Bitmap rawB : bpList) {
+			scaledBpList.add(Bitmap.createScaledBitmap(rawB, sH/2, sH/2, true));
+		}
+		
 		// we save the bitmaps
-		for (int i = 0; i < bpList.size(); ++i) {
-			saveToInternalSorage(0, bpList.get(i), "0" + Integer.toString(i) + ".png");
+		for (int i = 0; i < scaledBpList.size(); ++i) {
+			saveToInternalSorage(0, scaledBpList.get(i), "0" + Integer.toString(i) + ".png");
 			// Log.d(TAG, newFaceView.getmBpList().get(i).getWidth()+"/"+
 			// newFaceView.getmBpList().get(i).getWidth()+"=>"+
 			// croppedBpList.get(i).getWidth()+"/"+croppedBpList.get(i).getHeight());
 		}
 
-		// we recycle the bitmap
+		// we recycle the bitmaps
+		for (Bitmap bp : scaledBpList) {
+			bp.recycle();
+			bp = null;
+		}
 		for (Bitmap bp : bpList) {
 			bp.recycle();
 			bp = null;
 		}
+		
 	}
 	
 	/**
