@@ -3,18 +3,22 @@ package com.faceme.newface;
 import java.util.LinkedList;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PorterDuff;
+import android.preference.PreferenceManager;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 
+import com.faceme.R;
 import com.faceme.newface.NewFaceTool.Size;
 
 public class NewFaceView extends View implements OnTouchListener {
@@ -29,8 +33,10 @@ public class NewFaceView extends View implements OnTouchListener {
 	private Paint mCirclePaint;
 	private Paint mDotPaint;
 	private Path mPath;
-	protected LinkedList<PathPlus> mPathList;
-	protected LinkedList<Bitmap> mBpList;
+	private LinkedList<PathPlus> mPathList;
+	private LinkedList<Bitmap> mBpList;
+	private LinkedList<Bitmap> mModelList;
+	private boolean drawHelp;
 
 	public int sWidth;
 	public int sHeight;
@@ -65,12 +71,19 @@ public class NewFaceView extends View implements OnTouchListener {
 		sWidth = context.getResources().getDisplayMetrics().widthPixels;
 
 		mBpList = new LinkedList<Bitmap>();
-		mBpList.add(Bitmap.createBitmap(sWidth, sHeight, Bitmap.Config.ARGB_8888));
+		mBpList.add(Bitmap.createBitmap(sWidth, sHeight,
+				Bitmap.Config.ARGB_8888));
 		mPath = new Path();
 		mPathList = new LinkedList<PathPlus>();
 		// mPathList.add(mPath);
 		mCanvas = new Canvas(mBpList.getFirst());
 		mPaint = new Paint();
+
+		mModelList = new LinkedList<Bitmap>();
+
+		SharedPreferences preferences = PreferenceManager
+				.getDefaultSharedPreferences(context);
+		drawHelp = preferences.getBoolean("SHOW_HINT", true);
 
 		mPaint.setAntiAlias(true);
 		mPaint.setDither(true);
@@ -89,9 +102,37 @@ public class NewFaceView extends View implements OnTouchListener {
 		mDotPaint.setStyle(Paint.Style.FILL);
 	}
 
+	/**
+	 * Load the model bitmap from res with the right size
+	 */
+	private void loadModelBps(){
+		int imgW;
+		if(newFaceActivity.isScaleShapes()){
+			imgW = (int) (sHeight * 0.80f);
+		}else{
+			imgW = sHeight / 2;
+		}
+
+		mModelList.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),
+				R.drawable.facedemo00), imgW, imgW, true));
+		mModelList.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),
+				R.drawable.facedemo01), imgW, imgW, true));
+		mModelList.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),
+				R.drawable.facedemo02), imgW, imgW, true));
+		mModelList.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),
+				R.drawable.facedemo03), imgW, imgW, true));
+		mModelList.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),
+				R.drawable.facedemo04), imgW, imgW, true));
+		mModelList.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),
+				R.drawable.facedemo05), imgW, imgW, true));
+		mModelList.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),
+				R.drawable.facedemo06), imgW, imgW, true));
+	}
+	
 	public void initComplement(NewFaceTool nft, NewFaceActivity nfa) {
 		newFaceTool = nft;
 		newFaceActivity = nfa;
+		loadModelBps();
 	}
 
 	@Override
@@ -108,7 +149,8 @@ public class NewFaceView extends View implements OnTouchListener {
 		mPath.moveTo(x, y);
 		mX = x;
 		mY = y;
-		mPathList.addLast(new PathPlus(mPath, newFaceTool.size, (int) x, (int) y));
+		mPathList.addLast(new PathPlus(mPath, newFaceTool.size, (int) x,
+				(int) y));
 		// newFaceTool.drawDot((int)x, (int)y, mCanvas, mDotPaint);
 	}
 
@@ -163,13 +205,20 @@ public class NewFaceView extends View implements OnTouchListener {
 	@Override
 	protected void onDraw(Canvas canvas) {
 		// The circle
-		newFaceTool.drawTarget(canvas, mCirclePaint, sWidth, sHeight, newFaceActivity.isScaleShapes());
+		newFaceTool.drawTarget(canvas, mCirclePaint, sWidth, sHeight,
+				newFaceActivity.isScaleShapes());
 
 		// the path and the dots
 		newFaceTool.drawPathList(canvas, mPaint, mDotPaint, mPathList);
 
-		// The bitmaps
+		// the help in the background
 		int listSize = mBpList.size();
+		if (drawHelp) {
+			newFaceTool.drawHelpInBackground(canvas, mPaint,
+					mModelList.get(listSize-1), newFaceActivity.isScaleShapes(),sWidth, sHeight);
+		}
+
+		// The bitmaps
 		switch (newFaceTool.faceState) {
 		case 1:
 			if (listSize >= 1)
@@ -237,7 +286,8 @@ public class NewFaceView extends View implements OnTouchListener {
 			mPathList.clear();
 			// we disable the button
 			newFaceActivity.setEnableUndoButtun(false);
-			mBpList.add(Bitmap.createBitmap(sWidth, sHeight, Bitmap.Config.ARGB_8888));
+			mBpList.add(Bitmap.createBitmap(sWidth, sHeight,
+					Bitmap.Config.ARGB_8888));
 			if (newFaceTool.faceState - 1 <= mBpList.size()) {
 				mCanvas = new Canvas(mBpList.get(newFaceTool.faceState - 1));
 			}

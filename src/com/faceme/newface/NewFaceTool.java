@@ -9,6 +9,7 @@ import android.graphics.Paint;
 import android.util.Log;
 
 public class NewFaceTool {
+	private final static int HELP_OPACITY = 80;
 
 	// the size of the pencil
 	public enum Size {
@@ -71,5 +72,24 @@ public class NewFaceTool {
 			bp.recycle();
 			bp = null;
 		}
+	}
+	
+	/**
+	 * Draw in the background a transparent model to help new players
+	 * @param c canvas to draw on
+	 * @param p paint to use
+	 * @param b bitmap to draw
+	 * @param scaleShapes are the drawing scaled
+	 * @param sW screen width
+	 * @param sH screen height
+	 */
+	public void drawHelpInBackground(Canvas c, Paint p, Bitmap b, boolean scaleShapes, int sW, int sH){
+		p.setAlpha(HELP_OPACITY);
+		if (scaleShapes == true) {
+			c.drawBitmap(b, sW / 2 - sideBarWidth / 2-b.getWidth()/2, sH / 2-b.getHeight()/2,p);
+		} else {
+			c.drawBitmap(b, sW / 2 - sideBarWidth / 2-b.getWidth()/2, sH / 2-b.getHeight()/2,p);
+		}
+		p.setAlpha(255);
 	}
 }
