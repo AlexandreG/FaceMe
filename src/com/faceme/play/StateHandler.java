@@ -6,6 +6,7 @@ import android.content.Context;
 import android.graphics.RectF;
 import android.os.Handler;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.faceme.SoundManager;
 import com.faceme.play.faceshape.FaceShape;
@@ -54,6 +55,9 @@ public class StateHandler {
 	protected FaceShapeHandler fsh;
 
 	protected SoundManager soundManager; // The sound
+	
+	private boolean showShakeDialog;	//if the player don't know that he can shake
+	private long activityStart;
 
 	public StateHandler(Context context, SoundManager sm) {
 		rd = new Random();
@@ -67,26 +71,32 @@ public class StateHandler {
 
 		setState(ACTION_TRACKFINGER);
 		soundManager = sm;
+		
+		showShakeDialog = true;
+		activityStart = System.currentTimeMillis();
 	}
 
 	public void setShapeHandler(FaceShapeHandler faceShapeHandler) {
 		fsh = faceShapeHandler;
 	}
 
-	// shake means new state !
+	// shake means new state
 	public void shakyShakeYourBody() {
+		if(showShakeDialog)
+			showShakeDialog = false;
+		
 		// update state
 		switch (state) {
 
-		case EMOTE_SHAKE: // we do nothing obviously!
+		case EMOTE_SHAKE: // we do nothing
 			break;
-		case EMOTE_HAPPY: // we do nothing obviously!
+		case EMOTE_HAPPY: // we do nothing
 			break;
-		case EMOTE_SHOCK: // we do nothing obviously!
+		case EMOTE_SHOCK: // we do nothing
 			break;
-		case EMOTE_ANGRY: // we do nothing obviously!
+		case EMOTE_ANGRY: // we do nothing
 			break;
-		case EMOTE_DRUNK: // we do nothing obviously!
+		case EMOTE_DRUNK: // we do nothing
 			break;
 
 		// we new state !
@@ -259,7 +269,11 @@ public class StateHandler {
 	}
 
 	public void updateState() {
-
+		if(showShakeDialog == true && System.currentTimeMillis() - 15000> activityStart){
+			showShakeDialog = false;
+			Toast.makeText(ct, "Shake me *o*", Toast.LENGTH_SHORT).show();
+		}
+		
 		if (state == WAIT_LOOKDOWN) {
 			if (System.currentTimeMillis() - fsh.getLastTouchEvent() > WAITING_DURATION_2
 					&& System.currentTimeMillis() - stateBeginning > WAITING_DURATION_2) {

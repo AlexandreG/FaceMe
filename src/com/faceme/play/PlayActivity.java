@@ -32,8 +32,8 @@ import com.faceme.play.sense.TouchScreen;
  *
  */
 public class PlayActivity extends Activity {
-	protected final static boolean D = true;
-	protected final static String TAG = "Log";
+	private final static boolean D = true;
+	private final static String TAG = "Log";
 
 	public final static int ONSHAKE = 1;
 	public final static int ONTOUCH = 2;
@@ -47,23 +47,23 @@ public class PlayActivity extends Activity {
 	public final static int FRAME_PERIOD = 50;
 	public final static int DOUBLE_CLICK_PERIOD = 300;
 
-	protected int SW;	//screen width
-	protected int SH;	//screen height
-	protected int fingerX;
-	protected int fingerY;
-	protected int touchType;
-	protected float aX;
-	protected float aY;
-	protected float aZ;
+	private int SW;	//screen width
+	private int SH;	//screen height
+	private int fingerX;
+	private int fingerY;
+	private int touchType;
+	private float aX;
+	private float aY;
+	private float aZ;
 
-	protected PlayFaceView mPlayFaceView;	//The view
-	protected FaceShapeHandler mObHandler;	//The objects
-	protected StateHandler mStateHandler;
+	private PlayFaceView mPlayFaceView;	//The view
+	private FaceShapeHandler mObHandler;	//The objects
+	private StateHandler mStateHandler;
 
-	protected TouchScreen mTouchScreen;	//The touch
-	protected Accelerometer mAcc;	//The accelerometer
+	private TouchScreen mTouchScreen;	//The touch
+	private Accelerometer mAcc;	//The accelerometer
 
-	protected SoundManager mSoundManager;	//The sound
+	private SoundManager mSoundManager;	//The sound
 
 	//The engine
 	private Handler handler;
