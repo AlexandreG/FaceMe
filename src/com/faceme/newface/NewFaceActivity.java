@@ -36,25 +36,26 @@ import com.faceme.newface.NewFaceTool.Size;
  * 
  */
 public class NewFaceActivity extends Activity {
-	protected final static boolean D = true;
-	protected final static String TAG = "Log";
+	private final static boolean D = true;
+	private final static String TAG = "Log";
 
-	protected final static int FRAME_PERIOD = 50;
-	protected final static int CROP_ITER = 5;
+	private final static int FRAME_PERIOD = 50;
+	private final static int CROP_ITER = 5;
 
-	protected boolean showHints;
-	protected boolean scaleShapes;
+	private boolean showHints;
+	private boolean scaleShapes;
 
 	// Layout
-	protected NewFaceView newFaceView;
-	protected RadioGroup radioGroupSize;
-	protected TextView stepTextView;
-	protected Button undo;
-	protected Button next;
+	private NewFaceView newFaceView;
+	private RadioGroup radioGroupSize;
+	private TextView stepTextView;
+	private TextView textViewStepTitle;
+	private Button undo;
+	private Button next;
 
-	protected NewFaceTool mNewFaceTool;
+	private NewFaceTool mNewFaceTool;
 
-	protected SoundManager mSoundManager;
+	private SoundManager mSoundManager;
 
 	// Draw each FRAME_PERIOD
 	private Handler handler;
@@ -86,6 +87,8 @@ public class NewFaceActivity extends Activity {
 
 		stepTextView = (TextView) findViewById(R.id.textViewStep);
 		stepTextView.setText("Step 1/7");
+		textViewStepTitle = (TextView) findViewById(R.id.textViewStepTitle);
+		textViewStepTitle.setText("Left eyelid");
 
 		next = (Button) findViewById(R.id.next);
 		next.setOnClickListener(new OnClickListener() {
@@ -104,6 +107,8 @@ public class NewFaceActivity extends Activity {
 					newFaceView.drawAllThePath();
 					saveNewFace();
 				}
+				
+				textViewStepTitle.setText(getCurrentStateTitle(mNewFaceTool.faceState));
 			}
 		});
 
@@ -151,6 +156,31 @@ public class NewFaceActivity extends Activity {
 				showMessage();
 			}
 		}, 50);
+	}
+	
+	/**
+	 * Return the title of the current state ex: "Left eyelid"
+	 */
+	private String getCurrentStateTitle(int state){
+		switch (state) {
+		case 1:
+			return "Left eyelid";
+		case 2:
+			return "Left iris";
+		case 3:
+			return "Left eyebrow";
+		case 4:
+			return "Right eyelid";
+		case 5:
+			return "Right iris";
+		case 6:
+			return "Right eyebrow";
+		case 7:
+			return "Mouth";
+
+		default:
+			return "";
+		}
 	}
 
 	public void setEnableUndoButtun(boolean bl) {
