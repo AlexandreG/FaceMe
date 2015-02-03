@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.util.Log;
 
 public class NewFaceTool {
 	private final static int HELP_OPACITY = 80;
@@ -29,10 +28,12 @@ public class NewFaceTool {
 	/**
 	 * Draw the grey background and the white circle
 	 */
-	public void drawTarget(Canvas canvas, Paint paint, int sW, int sH, boolean scaleShapes) {
+	public void drawTarget(Canvas canvas, Paint paint, int sW, int sH,
+			boolean scaleShapes) {
 		canvas.drawColor(Color.GRAY);
 		if (scaleShapes == true) {
-			canvas.drawCircle(sW / 2 - sideBarWidth / 2, sH / 2, sH * 0.40f, paint);
+			canvas.drawCircle(sW / 2 - sideBarWidth / 2, sH / 2, sH * 0.40f,
+					paint);
 		} else {
 			canvas.drawCircle(sW / 2 - sideBarWidth / 2, sH / 2, sH / 4, paint);
 		}
@@ -41,7 +42,8 @@ public class NewFaceTool {
 	/**
 	 * Draw all the paths on the canvas
 	 */
-	public void drawPathList(Canvas canvas, Paint paint, Paint paintDot, LinkedList<PathPlus> ppList) {
+	public void drawPathList(Canvas canvas, Paint paint, Paint paintDot,
+			LinkedList<PathPlus> ppList) {
 		int radius = 0;
 		// The current path
 		for (PathPlus pp : ppList) {
@@ -73,22 +75,32 @@ public class NewFaceTool {
 			bp = null;
 		}
 	}
-	
+
 	/**
 	 * Draw in the background a transparent model to help new players
-	 * @param c canvas to draw on
-	 * @param p paint to use
-	 * @param b bitmap to draw
-	 * @param scaleShapes are the drawing scaled
-	 * @param sW screen width
-	 * @param sH screen height
+	 * 
+	 * @param c
+	 *            canvas to draw on
+	 * @param p
+	 *            paint to use
+	 * @param b
+	 *            bitmap to draw
+	 * @param scaleShapes
+	 *            are the drawing scaled
+	 * @param sW
+	 *            screen width
+	 * @param sH
+	 *            screen height
 	 */
-	public void drawHelpInBackground(Canvas c, Paint p, Bitmap b, boolean scaleShapes, int sW, int sH){
+	public void drawHelpInBackground(Canvas c, Paint p, Bitmap b,
+			boolean scaleShapes, int sW, int sH) {
 		p.setAlpha(HELP_OPACITY);
 		if (scaleShapes == true) {
-			c.drawBitmap(b, sW / 2 - sideBarWidth / 2-b.getWidth()/2, sH / 2-b.getHeight()/2,p);
+			c.drawBitmap(b, sW / 2 - sideBarWidth / 2 - b.getWidth() / 2, sH
+					/ 2 - b.getHeight() / 2, p);
 		} else {
-			c.drawBitmap(b, sW / 2 - sideBarWidth / 2-b.getWidth()/2, sH / 2-b.getHeight()/2,p);
+			c.drawBitmap(b, sW / 2 - sideBarWidth / 2 - b.getWidth() / 2, sH
+					/ 2 - b.getHeight() / 2, p);
 		}
 		p.setAlpha(255);
 	}
